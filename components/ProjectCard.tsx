@@ -38,6 +38,7 @@ export default function ProjectCard({
           {project.video ? (
             <video
               src={project.video}
+              poster={project.image}
               autoPlay
               muted
               loop

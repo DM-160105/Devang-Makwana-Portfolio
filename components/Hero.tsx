@@ -7,6 +7,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useTheme } from "next-themes";
 import ScrollArrow from "./ScrollArrow";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useDarkMode } from "@/hooks/use-dark-mode";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import ShinyText from "./ShinyText";
@@ -27,16 +28,7 @@ export default function Hero() {
   }, [images.length]);
 
   const isMobile = useIsMobile();
-  const { theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDarkMode =
-    mounted &&
-    (theme === "dark" || (theme === "system" && systemTheme === "dark"));
+  const isDarkMode = useDarkMode();
 
   if (isMobile === undefined) return null;
 
@@ -628,9 +620,7 @@ function TextAddition({
     setMounted(true);
   }, []);
 
-  const isDarkMode =
-    mounted &&
-    (theme === "dark" || (theme === "system" && systemTheme === "dark"));
+  const isDarkMode = useDarkMode();
 
   return (
     <span
