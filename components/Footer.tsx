@@ -45,16 +45,16 @@ export default function Footer() {
               style={
                 ismobile ? { marginLeft: "9px", marginBottom: "0" } : undefined
               }
-              className="inline-block relative h-anim w-4ch align-bottom overflow-hidden ml-5"
+              className="inline-flex relative h-anim overflow-hidden ml-5 align-bottom"
             >
               <AnimatePresence mode="wait">
                 <motion.span
                   key={words[index]}
-                  initial={{ y: 40, opacity: 0 }}
+                  initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -40, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: "circOut" }}
-                  className="absolute left-0 footer-animated-word"
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="footer-animated-word"
                 >
                   {words[index]}
                 </motion.span>
@@ -135,7 +135,6 @@ export default function Footer() {
                       alt={social.name}
                       fill
                       unoptimized
-                      className="invert-on-dark"
                     />
                   </a>
                 ))}

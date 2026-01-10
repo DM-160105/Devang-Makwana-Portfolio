@@ -24,7 +24,7 @@ export default function ProjectsForHero() {
           Project <span style={{ color: "var(--gray-400)" }}>Work</span>
         </h2>
         <div
-          style={{ padding: ismobile ? "0.5rem 0.6rem" : undefined }}
+          style={{ padding: ismobile ? "0.5rem 0.8rem" : undefined }}
           className="btn-explore flex items-center"
         >
           <Link

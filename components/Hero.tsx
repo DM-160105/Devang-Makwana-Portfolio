@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { CornerDownRight } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import ScrollArrow from "./ScrollArrow";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -27,6 +27,21 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [images.length]);
 
+  const darkimages = [
+    "darkimg1.svg",
+    "darkimg2.svg",
+    "darkimg3.svg",
+    "darkimg4.svg",
+  ];
+  const [darkcurrentImageIndex, setDarkCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDarkCurrentImageIndex((prev) => (prev + 1) % darkimages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [darkimages.length]);
+
   const isMobile = useIsMobile();
   const isDarkMode = useDarkMode();
 
@@ -37,36 +52,61 @@ export default function Hero() {
       {isMobile ? (
         <section className="hero-section text-center relative overflow-hidden">
           {/* Layer 1: Animated SVG Background */}
-          <div className="overflow-hidden flex items-center justify-center pointer-events-none">
-            {/* Added blur directly to content */}
-            <div style={{ paddingBottom: "1rem" }} className="blur-[2px]">
-              <AnimatePresence>
-                <motion.img
-                  key={currentImageIndex}
-                  src={
-                    isDarkMode
-                      ? `/assets/darkheroimgs/${images[currentImageIndex]}`
-                      : `/assets/heroimgs/${images[currentImageIndex]}`
-                  }
-                  alt=""
-                  className="absolute"
-                  transition={{
-                    duration: 2,
-                  }}
-                  style={{
-                    opacity: 1,
-                    scale: 5,
-                    aspectRatio: "1/1",
-                  }}
-                />
-              </AnimatePresence>
-              <HeroGridAnimation scale={5} />
+          {isDarkMode ? (
+            <div className="overflow-hidden flex items-center justify-center pointer-events-none">
+              {/* Added blur directly to content */}
+              <div style={{ paddingBottom: "1rem" }} className="blur-[2px]">
+                <AnimatePresence>
+                  <motion.img
+                    key={darkcurrentImageIndex}
+                    src={`/assets/darkheroimgs/${darkimages[darkcurrentImageIndex]}`}
+                    alt=""
+                    className="absolute"
+                    transition={{
+                      duration: 2,
+                    }}
+                    style={{
+                      opacity: 1,
+                      scale: 5,
+                      aspectRatio: "1/1",
+                    }}
+                  />
+                </AnimatePresence>
+                <HeroGridAnimation scale={5} />
+              </div>
+              {/* Removed backdrop-blur */}
+              <div className="absolute inset-0 bg-white/40" />
+              {/* Removed backdrop-blur-sm */}
+              <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0  bg-gradient-to-t from-white via-white/80 to-transparent" />
             </div>
-            {/* Removed backdrop-blur */}
-            <div className="absolute inset-0 bg-white/40" />
-            {/* Removed backdrop-blur-sm */}
-            <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0  bg-gradient-to-t from-white via-white/80 to-transparent" />
-          </div>
+          ) : (
+            <div className="overflow-hidden flex items-center justify-center pointer-events-none">
+              {/* Added blur directly to content */}
+              <div style={{ paddingBottom: "1rem" }} className="blur-[2px]">
+                <AnimatePresence>
+                  <motion.img
+                    key={currentImageIndex}
+                    src={`/assets/heroimgs/${images[currentImageIndex]}`}
+                    alt=""
+                    className="absolute"
+                    transition={{
+                      duration: 2,
+                    }}
+                    style={{
+                      opacity: 1,
+                      scale: 5,
+                      aspectRatio: "1/1",
+                    }}
+                  />
+                </AnimatePresence>
+                <HeroGridAnimation scale={5} />
+              </div>
+              {/* Removed backdrop-blur */}
+              <div className="absolute inset-0 bg-white/40" />
+              {/* Removed backdrop-blur-sm */}
+              <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0  bg-gradient-to-t from-white via-white/80 to-transparent" />
+            </div>
+          )}
 
           {/* Layer 2: Main Content */}
 
@@ -210,7 +250,7 @@ export default function Hero() {
                               label: "Gemini",
                             },
                             {
-                              src: "/assets/myTechStack/notion.png",
+                              src: "/assets/myTechStack/Notion.png",
                               label: "Notion",
                             },
                           ].map((tech, i) => (
@@ -243,32 +283,53 @@ export default function Hero() {
       ) : (
         <section className="hero-section hero-grid-container text-center relative overflow-hidden">
           {/* Layer 1: Animated SVG Background */}
-          <div className="hero-bg-layer w-full h-full overflow-hidden flex items-center justify-center pointer-events-none">
-            {/* Added blur directly to the content container */}
-            <div className="w-full h-full flex items-center justify-center blur-[2px]">
-              <AnimatePresence>
-                <motion.img
-                  key={currentImageIndex}
-                  src={
-                    isDarkMode
-                      ? `/assets/darkheroimgs/${images[currentImageIndex]}`
-                      : `/assets/heroimgs/${images[currentImageIndex]}`
-                  }
-                  alt=""
-                  className="absolute"
-                  transition={{
-                    duration: 2,
-                  }}
-                  style={{ opacity: 1, scale: 1.6 }}
-                />
-              </AnimatePresence>
-              <HeroGridAnimation scale={1.6} />
+          {isDarkMode ? (
+            <div className="hero-bg-layer w-full h-full overflow-hidden flex items-center justify-center pointer-events-none">
+              {/* Added blur directly to the content container */}
+              <div className="w-full h-full flex items-center justify-center blur-[2px]">
+                <AnimatePresence>
+                  <motion.img
+                    key={darkcurrentImageIndex}
+                    src={`/assets/darkheroimgs/${darkimages[darkcurrentImageIndex]}`}
+                    alt=""
+                    className="absolute"
+                    transition={{
+                      duration: 2,
+                    }}
+                    style={{ opacity: 1, scale: 1.6 }}
+                  />
+                </AnimatePresence>
+                <HeroGridAnimation scale={1.6} />
+              </div>
+              {/* Removed backdrop-blur-[2px] from here */}
+              <div className="absolute inset-0 bg-white/40" />
+              {/* Removed backdrop-blur-sm from here */}
+              <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent" />
             </div>
-            {/* Removed backdrop-blur-[2px] from here */}
-            <div className="absolute inset-0 bg-white/40" />
-            {/* Removed backdrop-blur-sm from here */}
-            <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent" />
-          </div>
+          ) : (
+            <div className="hero-bg-layer w-full h-full overflow-hidden flex items-center justify-center pointer-events-none">
+              {/* Added blur directly to the content container */}
+              <div className="w-full h-full flex items-center justify-center blur-[2px]">
+                <AnimatePresence>
+                  <motion.img
+                    key={currentImageIndex}
+                    src={`/assets/heroimgs/${images[currentImageIndex]}`}
+                    alt=""
+                    className="absolute"
+                    transition={{
+                      duration: 2,
+                    }}
+                    style={{ opacity: 1, scale: 1.6 }}
+                  />
+                </AnimatePresence>
+                <HeroGridAnimation scale={1.6} />
+              </div>
+              {/* Removed backdrop-blur-[2px] from here */}
+              <div className="absolute inset-0 bg-white/40" />
+              {/* Removed backdrop-blur-sm from here */}
+              <div className="hero-bottom-gradient absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent" />
+            </div>
+          )}
 
           {/* Layer 2: Main Content */}
           <div className="container-for-herosection">
@@ -439,7 +500,7 @@ export default function Hero() {
                                         label: "Gemini",
                                       },
                                       {
-                                        src: "/assets/myTechStack/notion.png",
+                                        src: "/assets/myTechStack/Notion.png",
                                         label: "Notion",
                                       },
                                     ].map((tech, i) => (

@@ -63,7 +63,12 @@ export default function ProjectCard({
 
         <h3 className="project-title-large">{project.title}</h3>
 
-        <p className="project-desc-clean">{project.description}</p>
+        <p
+          style={ismobile ? { fontSize: "12px" } : undefined}
+          className="project-desc-clean"
+        >
+          {project.description}
+        </p>
 
         <div className="project-tags-row">
           {tags.map((tag, i) => (
