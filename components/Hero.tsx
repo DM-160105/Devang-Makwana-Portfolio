@@ -18,6 +18,12 @@ const HeroGridAnimation = dynamic(() => import("./HeroGridAnimation"), {
 
 export default function Hero() {
   const images = ["img1.svg", "img2.svg", "img3.svg", "img4.svg"];
+  const darkimages = [
+    "darkimg1.svg",
+    "darkimg2.svg",
+    "darkimg3.svg",
+    "darkimg4.svg",
+  ];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -27,12 +33,6 @@ export default function Hero() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const darkimages = [
-    "darkimg1.svg",
-    "darkimg2.svg",
-    "darkimg3.svg",
-    "darkimg4.svg",
-  ];
   const [darkcurrentImageIndex, setDarkCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -41,7 +41,6 @@ export default function Hero() {
     }, 5000);
     return () => clearInterval(interval);
   }, [darkimages.length]);
-
   const isMobile = useIsMobile();
   const isDarkMode = useDarkMode();
 
