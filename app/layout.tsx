@@ -3,10 +3,9 @@ import "./globals.css";
 import Header from "@/components/Header";
 import SmoothScroll from "@/components/SmoothScroll";
 import dynamic from "next/dynamic";
-const Footer = dynamic(() => import("@/components/Footer"));
+import LazyFooter from "@/components/LazyFooter";
 
 import { Inter, Outfit } from "next/font/google";
-
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,9 +20,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://devangmakwana.com"),
+  metadataBase: new URL("https://devangmakwana.vercel.app"),
   title: {
-    default: "Devang Makwana | Creative Full Stack Developer",
+    default: "Devang Makwana - Full Stack Developer",
     template: "%s | Devang Makwana",
   },
   description:
@@ -34,10 +33,13 @@ export const metadata: Metadata = {
     "Full Stack Developer",
     "Web Developer",
     "Next.js",
+    "Next.js 14",
     "TypeScript",
     "React",
     "Tailwind CSS",
+    "Framer Motion",
     "AI Integration",
+    "AI Tutor",
     "Creative Development",
     "Software Engineer",
   ],
@@ -46,8 +48,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://devangmakwana.com",
-    title: "Devang Makwana | Creative Full Stack Developer",
+    url: "https://devangmakwana.vercel.app",
+    title: "Devang Makwana - Full Stack Developer",
     description:
       "Explore the portfolio of Devang Makwana, a Full Stack Developer specializing in building high-performance, visually stunning web applications.",
     siteName: "Devang Makwana Portfolio",
@@ -62,11 +64,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Devang Makwana | Creative Full Stack Developer",
+    title: "Devang Makwana - Full Stack Developer",
     description:
       "Premium full-stack portfolio featuring liquid glass effects, smooth scrolling, and advanced web projects.",
     images: ["/og-image.png"],
-    creator: "@devangmakwana", // Replace with actual handle if available
+    creator: "@DevangMakwana01",
   },
   robots: {
     index: true,
@@ -79,6 +81,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "google-site-verification=YOUR_VERIFICATION_CODE", // Optional: Add if user provides it later
+  },
 };
 
 export const viewport = {
@@ -90,12 +95,7 @@ export const viewport = {
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
-    icons: {
-    icon: "app/favicon.ico",
-  },
 };
-
-
 
 const LazyMotionProvider = dynamic(() =>
   import("@/components/LazyMotionProvider").then(
@@ -131,11 +131,10 @@ export default function RootLayout({
                 <main className="flex-grow pt-[var(--header-height)]">
                   {children}
                 </main>
-                <Footer />
+                <LazyFooter />
               </div>
             </ThemeProvider>
           </LazyMotionProvider>
-        
         </SmoothScroll>
       </body>
     </html>

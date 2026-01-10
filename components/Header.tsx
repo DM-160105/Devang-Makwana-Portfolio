@@ -8,6 +8,8 @@ import Image from "next/image";
 import { DotsBounceIcon2 } from "./DotsBounceIcon2";
 import { ThemeToggle } from "./ThemeToggle";
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 const navItems = [
   { name: "Work", path: "/work" },
   { name: "About", path: "/about" },
@@ -22,10 +24,8 @@ export default function Header() {
   );
 }
 
-import { useIsMobile } from "@/hooks/use-mobile";
-
 // -----------------------------------------------------------------------------
-// PC / Desktop Header
+// Header Component
 // -----------------------------------------------------------------------------
 function DesktopHeader() {
   const pathname = usePathname();
@@ -53,8 +53,6 @@ function DesktopHeader() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-
-  if (isMobile === undefined) return null;
 
   return (
     <header
@@ -116,7 +114,7 @@ function DesktopHeader() {
                       <span
                         className="whitespace-nowrap"
                         style={{
-                          fontSize: "11px",
+                          fontSize: "11.5px",
                           fontWeight: "900",
                           alignSelf: "center",
                         }}
@@ -163,9 +161,9 @@ function DesktopHeader() {
                       y: 20,
                       filter: "blur(10px)",
                       transition: {
-                        duration: 0.2,
+                        duration: 0.15, // FASTER (was 0.2)
                         ease: "easeIn",
-                        staggerChildren: 0.05,
+                        staggerChildren: 0.03, // TIGHTER (was 0.05)
                         staggerDirection: -1,
                       },
                     },
@@ -174,10 +172,10 @@ function DesktopHeader() {
                       y: 0,
                       filter: "blur(0px)",
                       transition: {
-                        duration: 0.4,
+                        duration: 0.25, // FASTER (was 0.4)
                         ease: [0.33, 1, 0.68, 1],
-                        staggerChildren: 0.1,
-                        delayChildren: 0.1,
+                        staggerChildren: 0.05, // TIGHTER (was 0.1)
+                        delayChildren: 0.05,
                       },
                     },
                   }}
@@ -267,90 +265,90 @@ function DesktopHeader() {
             )}
           </div>
         </div>
-      ) : (
-        // DESKTOP VIEW: Standard Two-Pills
-        <>
-          {/* Profile Pill */}
-          <div
-            className="nav-pill"
-            style={{ paddingTop: "10px", paddingBottom: "10px" }}
-          >
-            <Link
-              href="/"
-              className="flex items-center gap-2 pr-2 hover:opacity-100 transition-opacity"
-            >
-              <div className="header-avatar">
-                <Image
-                  src="/assets/avatar.png"
-                  alt="DM"
-                  width={35}
-                  height={35}
-                  className="object-cover"
-                  style={{ height: "auto" }}
-                />
-              </div>
-              <span
-                className="whitespace-nowrap"
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "900",
-                }}
-              >
-                Devang Makwana
-              </span>
-            </Link>
-          </div>
+      ) : undefined}
 
-          {/* Navigation Pill */}
-          <nav className="nav-pill relative">
-            <ul className="flex items-center gap-1 list-none m-0 p-0">
-              {navItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    href={item.path}
-                    className={`nav-link ${
-                      pathname === item.path ? "active" : ""
-                    }`}
-                    style={{
-                      fontWeight: "700",
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
+      {/* DESKTOP VIEW: Standard Two-Pills ====================================== */}
+      <div className="hidden md:flex items-center justify-center gap-3">
+        {/* Profile Pill */}
+        <div
+          className="nav-pill"
+          style={{ paddingTop: "10px", paddingBottom: "10px" }}
+        >
+          <Link
+            href="/"
+            className="flex items-center gap-2 pr-2 hover:opacity-100 transition-opacity"
+          >
+            <div className="header-avatar">
+              <Image
+                src="/assets/avatar.png"
+                alt="DM"
+                width={35}
+                height={35}
+                className="object-cover"
+                style={{ height: "auto" }}
+              />
+            </div>
+            <span
+              className="whitespace-nowrap"
+              style={{
+                fontSize: "14px",
+                fontWeight: "900",
+              }}
+            >
+              Devang Makwana
+            </span>
+          </Link>
+        </div>
+
+        {/* Navigation Pill */}
+        <nav className="nav-pill relative" style={{ marginLeft: "10px" }}>
+          <ul className="flex items-center gap-1 list-none m-0 p-0">
+            {navItems.map((item) => (
+              <li key={item.path}>
                 <Link
-                  href="/resume"
-                  className="btn-resume flex"
+                  href={item.path}
+                  className={`nav-link ${
+                    pathname === item.path ? "active" : ""
+                  }`}
                   style={{
-                    padding: "0.4rem 1rem",
-                    fontSize: "0.8125rem",
-                    margin: "0 0 0 10px",
+                    fontWeight: "700",
+                    fontSize: "0.85rem",
                   }}
                 >
-                  <span className="hidden lg:inline">Resume</span>
+                  {item.name}
                 </Link>
               </li>
-            </ul>
-          </nav>
-          <div
-            className="nav-pill relative border-gray-200 dark:border-gray-700 items-center justify-center"
-            style={{
-              borderRadius: "50%",
-              margin: "0 0 0 10px",
-              width: "60px",
-              height: "60px",
-              padding: 0,
-              flexShrink: 0,
-              cursor: "pointer",
-            }}
-          >
-            <ThemeToggle />
-          </div>
-        </>
-      )}
+            ))}
+            <li>
+              <Link
+                href="/resume"
+                className="btn-resume flex"
+                style={{
+                  padding: "0.4rem 1rem",
+                  fontSize: "0.8125rem",
+                  margin: "0 0 0 10px",
+                }}
+              >
+                <span className="hidden lg:inline">Resume</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <div
+          className="nav-pill relative border-gray-200 dark:border-gray-700 items-center justify-center"
+          style={{
+            borderRadius: "50%",
+            margin: "0 0 0 10px",
+            width: "60px",
+            height: "60px",
+            padding: 0,
+            flexShrink: 0,
+            cursor: "pointer",
+          }}
+        >
+          <ThemeToggle />
+        </div>
+      </div>
     </header>
   );
 }

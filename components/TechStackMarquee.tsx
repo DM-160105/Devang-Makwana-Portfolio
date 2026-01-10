@@ -41,7 +41,7 @@ export default function TechStackMarquee() {
                 label: "Gemini",
               },
               {
-                src: "/assets/myTechStack/notion.png",
+                src: "/assets/myTechStack/Notion.png",
                 label: "Notion",
               },
             ].map((tech, i) => (
@@ -52,7 +52,6 @@ export default function TechStackMarquee() {
                     alt={tech.label}
                     width={25}
                     height={25}
-                    className="invert-on-dark"
                   />
                 </div>
               </div>

@@ -5,32 +5,29 @@ import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useDarkMode } from "@/hooks/use-dark-mode";
+
+// -----------------------------------------------------------------------------
+// Theme Toggle with Instant Load & View Transitions
+// -----------------------------------------------------------------------------
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { setTheme, resolvedTheme } = useTheme();
   const ismobile = useIsMobile();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="w-9 h-9 flex items-center justify-center">
-        {/* Placeholder to prevent layout shift */}
-        <span className="w-5 h-5 bg-gray-200 rounded-full opacity-20" />
-      </div>
-    );
-  }
+  // Use a default size if isMobile is undefined to ensure hydration match
+  // Defaulting to desktop size (26) which scales down to 20 on mobile view update
+  const iconSize = ismobile ? 20 : 26;
 
   const toggleTheme = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
+
     // Check if the browser supports View Transitions
     if (
       !document.startViewTransition ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      setTheme(theme === "dark" ? "light" : "dark");
+      setTheme(newTheme);
       return;
     }
 
@@ -46,7 +43,7 @@ export function ThemeToggle() {
     );
 
     const transition = document.startViewTransition(() => {
-      setTheme(theme === "dark" ? "light" : "dark");
+      setTheme(newTheme);
     });
 
     try {
@@ -61,7 +58,7 @@ export function ThemeToggle() {
           ],
         },
         {
-          duration: 500,
+          duration: 400, // FASTER (was 500)
           easing: "ease-in-out",
           // The pseudo-element to animate (the new snapshot)
           pseudoElement: "::view-transition-new(root)",
@@ -72,17 +69,26 @@ export function ThemeToggle() {
     }
   };
 
+  const isDark = useDarkMode();
+
   return (
     <motion.button
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
-      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center text-foreground"
+      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center justify-center text-foreground relative"
       aria-label="Toggle Dark Mode"
     >
-      {theme === "dark" ? (
-        <Sun size={ismobile ? 20 : 26} className="text-yellow-400" />
+      {/* Sun Icon: Visible in Light, Hidden in Dark */}
+      {isDark ? (
+        <Sun
+          size={iconSize}
+          className="text-yellow-400 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0"
+        />
       ) : (
-        <Moon size={ismobile ? 20 : 26} className="text-gray-600" />
+        <Moon
+          size={iconSize}
+          className="text-gray-600 absolute rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100"
+        />
       )}
     </motion.button>
   );

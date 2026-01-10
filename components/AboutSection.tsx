@@ -19,6 +19,7 @@ const images = [
 
 const AboutSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loadedCount, setLoadedCount] = useState(0);
   const ismobile = useIsMobile();
 
   useEffect(() => {
@@ -34,20 +35,39 @@ const AboutSection = () => {
     <section className="section-padded">
       <div className="flex flex-col items-center mb-16">
         <SectionLabel text="About Me" />
-        <h2 className="about-head-main flex" style={{ marginBottom: "0" }}>
-          <SplitText className="about-head-main" text="Hello" />
+        <h2
+          className="about-head-main-mobile flex"
+          style={{ marginBottom: "0", paddingBottom: "0" }}
+        >
+          <SplitText className="about-head-main-mobile" text="Hello" />
 
-          <span style={{ color: "var(--gray-400)" }}>
+          <span style={{ color: "var(--gray-400)", paddingBottom: 0 }}>
             <SplitText
-              className="about-head-main about-head-main-gray"
+              className="about-head-main-mobile about-head-main-gray"
               text="!"
             />
           </span>
-          <span className="waving-hand" style={{ paddingLeft: "1rem" }}>
+          <span
+            className="waving-hand"
+            style={{ paddingLeft: "1rem", paddingBottom: 0 }}
+          >
             👋
           </span>
         </h2>
+
+        <h2>
+          <SplitText className="about-head-main-mobile-last" text="I'm" />
+        </h2>
+        <span>
+          <SplitText className="about-head-main-mobile-last " text="Devang" />
+          <SplitText
+            className="about-head-main-mobile-last about-head-main-gray"
+            text="Makwana"
+          />
+        </span>
       </div>
+
+      <div style={{ paddingBottom: "2rem" }}></div>
 
       <div
         className="about-main-card"
@@ -75,7 +95,13 @@ const AboutSection = () => {
                 : undefined
             }
           >
-            <div className="coverflow-wrapper">
+            <div
+              className="coverflow-wrapper"
+              style={{
+                opacity: loadedCount >= images.length ? 1 : 0,
+                transition: "opacity 0.5s ease-in-out",
+              }}
+            >
               {images.map((img, i) => {
                 // Calculate robust relative offset in range [-len/2, len/2]
                 const length = images.length;
@@ -112,6 +138,8 @@ const AboutSection = () => {
                       src={img}
                       alt="About Me"
                       fill
+                      priority
+                      onLoad={() => setLoadedCount((prev) => prev + 1)}
                       className="object-cover rounded-[1rem]"
                     />
                   </motion.div>
@@ -198,7 +226,13 @@ const AboutSection = () => {
                 : undefined
             }
           >
-            <div className="coverflow-wrapper">
+            <div
+              className="coverflow-wrapper"
+              style={{
+                opacity: loadedCount >= images.length ? 1 : 0,
+                transition: "opacity 0.5s ease-in-out",
+              }}
+            >
               {images.map((img, i) => {
                 // Calculate robust relative offset in range [-len/2, len/2]
                 const length = images.length;
@@ -235,6 +269,8 @@ const AboutSection = () => {
                       src={img}
                       alt="About Me"
                       fill
+                      priority
+                      onLoad={() => setLoadedCount((prev) => prev + 1)}
                       className="object-cover rounded-[1rem]"
                     />
                   </motion.div>

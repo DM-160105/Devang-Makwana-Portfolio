@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import dynamic from "next/dynamic";
 const SectionLabel = dynamic(() => import("./SectionLabel"));
 import { LayoutTemplate, Palette, Camera, BadgeCheck } from "lucide-react";
@@ -31,6 +31,8 @@ const superpowersList = [
 ];
 
 const SuperpowersSection = () => {
+  const [loadedMarquee, setLoadedMarquee] = useState(0);
+  const totalMarquee = brandImages.length * 2;
   const ismobile = useIsMobile();
   if (ismobile === undefined) return null;
   return (
@@ -82,6 +84,7 @@ const SuperpowersSection = () => {
                   src="/assets/SuperpowerImg.png"
                   alt="Frontend Development"
                   fill
+                  priority
                   className="object-contain"
                 />
               </div>
@@ -138,7 +141,13 @@ const SuperpowersSection = () => {
                   Infinite scroll track:
                   We need to duplicate content to make it seamless loop.
                 */}
-              <div className="branding-track">
+              <div
+                className="branding-track"
+                style={{
+                  opacity: loadedMarquee >= totalMarquee ? 1 : 0,
+                  transition: "opacity 0.5s ease-in-out",
+                }}
+              >
                 {[...brandImages, ...brandImages].map((img, i) => (
                   <div
                     style={{ borderRadius: "5px" }}
@@ -149,6 +158,8 @@ const SuperpowersSection = () => {
                       src={img}
                       alt={`Branding ${i}`}
                       fill
+                      priority
+                      onLoad={() => setLoadedMarquee((prev) => prev + 1)}
                       className="object-cover"
                       sizes="(max-width: 768px) 50vw, 20vw"
                     />

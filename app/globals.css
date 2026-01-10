@@ -361,6 +361,7 @@
   }
   .stat-grid {
     border-top: 1px solid #786f62;
+    border-bottom: 1px solid #786f62;
   }
   .resume-main {
     color: rgb(222, 215, 204);
@@ -1130,6 +1131,7 @@ button:disabled {
   gap: 2rem;
   padding-top: 2.5rem;
   border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
   margin-top: 3rem;
 }
 
@@ -2043,8 +2045,26 @@ button:disabled {
   padding-bottom: 0.2rem;
 }
 
+.about-head-main-mobile {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  text-align: center;
+
+  color: var(--foreground);
+  padding-bottom: 0.2rem;
+}
+
+.about-head-main-mobile-last {
+  font-size: clamp(1.7rem, 5vw, 4rem);
+  font-weight: 700;
+  text-align: center;
+
+  color: var(--foreground);
+}
+
 .about-head-main-gray {
   margin-left: 0.5rem;
+
   color: var(--gray-400);
 }
 

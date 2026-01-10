@@ -126,7 +126,6 @@ export default function AboutPage() {
               <div
                 className="stat-grid"
                 style={{
-                  borderBottom: "1px solid #786f62",
                   paddingBottom: "3rem",
                 }}
               >
@@ -219,7 +218,10 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div className="stat-grid">
+              <div
+                className="stat-grid"
+                style={{ borderBottomColor: "transparent" }}
+              >
                 <div>
                   <h4 className="stat-number">
                     <span style={{ paddingRight: "1rem" }}>➤</span>Always
