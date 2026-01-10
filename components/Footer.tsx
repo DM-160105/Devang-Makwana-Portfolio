@@ -153,7 +153,7 @@ export default function Footer() {
           className="flex justify-between items-center px-4 opacity-50 text-xs text-gray-400 pb-10"
         >
           <span>Presently in Rajkot, India.</span>
-          <span>© 2025 - Devang Makwana</span>
+          <span>© 2026 - Devang Makwana</span>
         </div>
         <div
           style={{
