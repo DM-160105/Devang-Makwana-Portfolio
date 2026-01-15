@@ -93,7 +93,6 @@ Here's an overview of the project's architecture:
 │   └── data.ts           # Project Data & Constants
 ├── public/               # Static Assets
 │   ├── assets/           # Images, SVGs, Icons
-│   ├── favicon.ico       # Website Icon
 │   └── ...
 └── ...config files (tailwind, postcss, etc.)
 ```
